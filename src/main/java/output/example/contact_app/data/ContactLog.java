@@ -18,5 +18,4 @@ public class ContactLog {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-
 }
