@@ -1,30 +1,65 @@
 plugins {
-	id 'java'
-	id 'war'
-	id 'org.springframework.boot' version '3.5.3'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'war'
+    id 'org.springframework.boot' version '3.5.3'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'output.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //spring boot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //Thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    //Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //OpenAPI Generator
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
+
+    //便利機能、Utility
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //MySQLドライバ
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    //MyBaits
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+    //APサーバー（Tomcat）
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    //SpringBoot Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //Mybatis Test
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
+    //H2(InMemoryDB)
+    testImplementation 'com.h2database:h2:2.3.232'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
