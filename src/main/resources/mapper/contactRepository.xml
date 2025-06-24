@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="output.example.contact_app.repository.ContactRepository">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO contact_records (contact_date)
+        VALUES (#{contactDate})
+    </insert>
+
+    <select id="findByContactDate" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, contact_date, created_at, updated_at
+        FROM contact_records
+        WHERE contact_date = #{contactDate}
+    </select>
+    <select id="findById" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, contact_date, created_at, updated_at
+        FROM contact_records
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAllOrderByContactDateAsc" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, contact_date, created_at, updated_at
+        FROM contact_records
+        ORDER BY contact_date ASC
+    </select>
+
+    <update id="update">
+        UPDATE contact_records
+        SET contact_date = #{contactDate}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM contact_records
+        WHERE id = #{id}
+    </delete>
+
+    <select id="findConsecutiveLog" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, contact_date, created_at, updated_at
+        FROM contact_records
+        WHERE contact_date &lt;= #{today}
+        ORDER BY contact_date DESC
+    </select>
+
+</mapper>
