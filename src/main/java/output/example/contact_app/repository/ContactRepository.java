@@ -3,11 +3,12 @@ package output.example.contact_app.repository;
 import org.apache.ibatis.annotations.Mapper;
 import output.example.contact_app.data.ContactLog;
 
+
 import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
-public class ContactRepository {
+public interface ContactRepository {
     // 連絡記録を追加
     void insert(ContactLog log);
 
