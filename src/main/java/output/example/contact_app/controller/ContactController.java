@@ -30,22 +30,23 @@ public class ContactController {
         return contactService.searchContactLogList();
     }
 
-
     // 特定のIDの連絡記録を取得
     @GetMapping("/ContactLog/id/{id}")
     public ContactLog getContactLogById(@PathVariable("id") int id) {
-        ContactLog log = contactService.searchContactLogById(id);
-        if (log == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact record not found with ID: " + id);
-        }
-        return log;
+        return contactService.searchContactLogById(id);
+    }
+
+    // 特定の名前の連絡記録を取得
+    @GetMapping("/ContactLog/lover/{lover}")
+    public ContactLog getContactLogByLover(@PathVariable("lover") String lover) {
+        return contactService.searchContactLogByLover(lover);
     }
 
     // 連絡記録の追加
     @PostMapping("/insertContactLog")
     public ResponseEntity<String> addContactLog(@RequestBody ContactLog contactLog) {
         try {
-            contactService.addContactLog(contactLog.getContactDate());
+            contactService.InsertContactLog(contactLog.getLover(), contactLog.getContactDate());
             return ResponseEntity.ok("登録処理が成功しました。");
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -56,7 +57,7 @@ public class ContactController {
     @PutMapping("/updateContactLog/id/{id}") // PUTリクエストで更新
     public ResponseEntity<String> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) {
         try {
-            contactService.updateContactLog(id, contactLog.getContactDate());
+            contactService.updateContactLog(id,contactLog.getLover(), contactLog.getContactDate());
             return ResponseEntity.ok("更新処理が成功しました");
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -73,4 +74,6 @@ public class ContactController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting contact record: " + e.getMessage());
         }
     }
+
+
 }

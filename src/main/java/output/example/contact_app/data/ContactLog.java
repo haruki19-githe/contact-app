@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class ContactLog {
 
     private int id;
+    private String lover;
     private LocalDate contactDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

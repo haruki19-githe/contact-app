@@ -9,11 +9,17 @@ import java.util.List;
 
 @Mapper
 public interface ContactRepository {
+    // 連続日数を計算
+    List<ContactLog> searchConsecutiveLog(LocalDate today);
+
     //全ての連絡記録を日付順で取得
     List<ContactLog> searchAllOrderByContactDateAsc();
 
     // IDで検索
     ContactLog searchContactLogById(int id);
+
+    // 名前で検索
+    ContactLog searchContactLogByLover(String lover);
 
     // 特定の日付の記録を検索
     ContactLog searchByContactDate(LocalDate contactDate);
@@ -27,6 +33,5 @@ public interface ContactRepository {
     // 連絡記録を削除
     void deleteContactLog(int id);
 
-    // 連続日数を計算するためのヘルパー
-    List<ContactLog> searchConsecutiveLog(LocalDate today);
+
 }
