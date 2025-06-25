@@ -27,9 +27,6 @@ public interface ContactRepository {
     // IDで検索
     ContactLog findById(int id);
 
-    // 全レコード数（任意）
-    int countTotalRecords();
-
     // 連続日数を計算するためのヘルパー
     List<ContactLog> findConsecutiveLog(LocalDate today);
 }
