@@ -18,46 +18,46 @@ public class ContactService {
         this.contactRepository = contactRepository;
     }
 
-    public List<ContactLog> getAllContactRecords() {
-        return contactRepository.findAllOrderByContactDateAsc(); // 変更
+    public List<ContactLog> searchContactLogList() {
+        return contactRepository.searchAllOrderByContactDateAsc(); // 変更
     }
 
-    public ContactLog getContactRecordById(int id) {
-        return contactRepository.findById(id);
+    public ContactLog searchContactLogById(int id) {
+        return contactRepository.searchContactLogById(id);
     }
 
     @Transactional
-    public void addContactRecord(LocalDate contactDate) {
-        if (contactRepository.findByContactDate(contactDate) == null) {
+    public void addContactLog(LocalDate contactDate) {
+        if (contactRepository.searchByContactDate(contactDate) == null) {
             ContactLog newLog = new ContactLog();
             newLog.setContactDate(contactDate);
-            contactRepository.insert(newLog);
+            contactRepository.insertContactLog(newLog);
         } else {
             throw new IllegalArgumentException("指定された日付 (" + contactDate + ") の連絡記録は既に存在します。");
         }
     }
 
     @Transactional
-    public void updateContactRecord(int id, LocalDate newContactDate) {
-        ContactLog existingLog = contactRepository.findById(id);
+    public void updateContactLog(int id, LocalDate newContactDate) {
+        ContactLog existingLog = contactRepository.searchContactLogById(id);
         if (existingLog == null) {
             throw new IllegalArgumentException("ID: " + id + " の連絡記録が見つかりません。");
         }
-        ContactLog logAtNewDate = contactRepository.findByContactDate(newContactDate);
+        ContactLog logAtNewDate = contactRepository.searchByContactDate(newContactDate);
         if (logAtNewDate != null && logAtNewDate.getId() != id) {
             throw new IllegalArgumentException("指定された日付 (" + newContactDate + ") には既に別の連絡記録が存在します。");
         }
         existingLog.setContactDate(newContactDate);
-        contactRepository.update(existingLog);
+        contactRepository.updateContactLog(existingLog);
     }
 
     @Transactional
-    public void deleteContactRecord(int id) {
-        contactRepository.delete(id);
+    public void deleteContactLog(int id) {
+        contactRepository.deleteContactLog(id);
     }
 
     public int calculateConsecutiveDays() {
-        List<ContactLog> logs = contactRepository.findConsecutiveLog(LocalDate.now());
+        List<ContactLog> logs = contactRepository.searchConsecutiveLog(LocalDate.now());
 
         if (logs.isEmpty()) {
             return 0;

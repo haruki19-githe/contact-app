@@ -10,7 +10,6 @@ import output.example.contact_app.service.ContactService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/contact-logs")
 public class ContactController {
 
     private final ContactService contactService;
@@ -21,57 +20,55 @@ public class ContactController {
 
     // 連続連絡日数を取得
     @GetMapping("/consecutive-days")
-    public ResponseEntity<Integer> getConsecutiveDays() {
-        int consecutiveDays = contactService.calculateConsecutiveDays();
-        return ResponseEntity.ok(consecutiveDays); // HTTP 200 OK
+    public int getConsecutiveDays() {
+        return contactService.calculateConsecutiveDays();
     }
 
     // 全ての連絡記録を取得
-    @GetMapping
-    public ResponseEntity<List<ContactLog>> getAllContactLogs() {
-        List<ContactLog> logs = contactService.getAllContactRecords();
-        return ResponseEntity.ok(logs);
+    @GetMapping("/ContactLogList")
+    public List<ContactLog> getContactLogList() {
+        return contactService.searchContactLogList();
     }
 
 
     // 特定のIDの連絡記録を取得
-    @GetMapping("/{id}")
-    public ResponseEntity<ContactLog> getContactLogById(@PathVariable("id") int id) {
-        ContactLog log = contactService.getContactRecordById(id);
+    @GetMapping("/ContactLog/id/{id}")
+    public ContactLog getContactLogById(@PathVariable("id") int id) {
+        ContactLog log = contactService.searchContactLogById(id);
         if (log == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact record not found with ID: " + id);
         }
-        return ResponseEntity.ok(log);
+        return log;
     }
 
     // 連絡記録の追加
-    @PostMapping
-    public ResponseEntity<Void> addContactLog(@RequestBody ContactLog contactLog) {
+    @PostMapping("/insertContactLog")
+    public ResponseEntity<String> addContactLog(@RequestBody ContactLog contactLog) {
         try {
-            contactService.addContactRecord(contactLog.getContactDate());
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            contactService.addContactLog(contactLog.getContactDate());
+            return ResponseEntity.ok("登録処理が成功しました。");
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     // 連絡記録の更新
-    @PutMapping("/{id}") // PUTリクエストで更新
-    public ResponseEntity<Void> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) {
+    @PutMapping("/updateContactLog/id/{id}") // PUTリクエストで更新
+    public ResponseEntity<String> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) {
         try {
-            contactService.updateContactRecord(id, contactLog.getContactDate());
-            return ResponseEntity.ok().build();
+            contactService.updateContactLog(id, contactLog.getContactDate());
+            return ResponseEntity.ok("更新処理が成功しました");
         } catch (IllegalArgumentException e) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     // 連絡記録の削除
-    @DeleteMapping("/{id}") // DELETEリクエストで削除
-    public ResponseEntity<Void> deleteContactLog(@PathVariable("id") int id) {
+    @DeleteMapping("/deleteContactLog/id/{id}") // DELETEリクエストで削除
+    public ResponseEntity<String> deleteContactLog(@PathVariable("id") int id) {
         try {
-            contactService.deleteContactRecord(id);
-            return ResponseEntity.noContent().build();
+            contactService.deleteContactLog(id);
+            return ResponseEntity.ok("削除処理が成功しました。");
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting contact record: " + e.getMessage());
         }
