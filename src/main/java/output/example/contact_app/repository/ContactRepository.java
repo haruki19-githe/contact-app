@@ -3,11 +3,12 @@ package output.example.contact_app.repository;
 import org.apache.ibatis.annotations.Mapper;
 import output.example.contact_app.data.ContactLog;
 
+
 import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
-public class ContactRepository {
+public interface ContactRepository {
     // 連絡記録を追加
     void insert(ContactLog log);
 
@@ -25,9 +26,6 @@ public class ContactRepository {
 
     // IDで検索
     ContactLog findById(int id);
-
-    // 全レコード数（任意）
-    int countTotalRecords();
 
     // 連続日数を計算するためのヘルパー
     List<ContactLog> findConsecutiveLog(LocalDate today);
