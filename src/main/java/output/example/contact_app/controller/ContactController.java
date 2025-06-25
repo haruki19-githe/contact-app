@@ -28,9 +28,9 @@ public class ContactController {
 
     // 全ての連絡記録を取得
     @GetMapping
-    public ResponseEntity<List<ContactLog>> getAllContactLogs() { // 戻り値を List<ContactLog> に変更
+    public ResponseEntity<List<ContactLog>> getAllContactLogs() {
         List<ContactLog> logs = contactService.getAllContactRecords();
-        return ResponseEntity.ok(logs); // DTOへの変換不要
+        return ResponseEntity.ok(logs);
     }
 
 
@@ -46,7 +46,7 @@ public class ContactController {
 
     // 連絡記録の追加
     @PostMapping
-    public ResponseEntity<Void> addContactLog(@RequestBody ContactLog contactLog) { // ContactLogを直接受け取る
+    public ResponseEntity<Void> addContactLog(@RequestBody ContactLog contactLog) {
         try {
             contactService.addContactRecord(contactLog.getContactDate());
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -57,12 +57,12 @@ public class ContactController {
 
     // 連絡記録の更新
     @PutMapping("/{id}") // PUTリクエストで更新
-    public ResponseEntity<Void> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) { // ContactLogを直接受け取る
+    public ResponseEntity<Void> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) {
         try {
             contactService.updateContactRecord(id, contactLog.getContactDate());
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage()); // 'new' が重複している
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
