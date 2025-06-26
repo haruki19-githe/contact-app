@@ -3,44 +3,52 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="output.example.contact_app.repository.ContactRepository">
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO contact_log (contact_date)
-        VALUES (#{contactDate})
-    </insert>
-
-    <select id="findByContactDate" resultType="output.example.contact_app.data.ContactLog">
-        SELECT id, contact_date, created_at, updated_at
-        FROM contact_log
-        WHERE contact_date = #{contactDate}
-    </select>
-    <select id="findById" resultType="output.example.contact_app.data.ContactLog">
-        SELECT id, contact_date, created_at, updated_at
-        FROM contact_log
-        WHERE id = #{id}
-    </select>
-
-    <select id="findAllOrderByContactDateAsc" resultType="output.example.contact_app.data.ContactLog">
-        SELECT id, contact_date, created_at, updated_at
-        FROM contact_log
-        ORDER BY contact_date ASC
-    </select>
-
-    <update id="update">
-        UPDATE contact_log
-        SET contact_date = #{contactDate}
-        WHERE id = #{id}
-    </update>
-
-    <delete id="delete">
-        DELETE FROM contact_log
-        WHERE id = #{id}
-    </delete>
-
-    <select id="findConsecutiveLog" resultType="output.example.contact_app.data.ContactLog">
-        SELECT id, contact_date, created_at, updated_at
+    <select id="searchConsecutiveLog" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, lover, contact_date, created_at, updated_at
         FROM contact_log
         WHERE contact_date &lt;= #{today}
         ORDER BY contact_date DESC
     </select>
+
+    <select id="searchAllOrderByContactDateAsc" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, lover, contact_date, created_at, updated_at
+        FROM contact_log
+        ORDER BY contact_date ASC
+    </select>
+
+    <select id="searchContactLogById" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, lover, contact_date, created_at, updated_at
+        FROM contact_log
+        WHERE id = #{id}
+    </select>
+
+    <select id="searchContactLogByLover" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, lover, contact_date, created_at, updated_at
+        FROM contact_log
+        WHERE lover = #{lover}
+    </select>
+
+    <select id="searchByContactDate" resultType="output.example.contact_app.data.ContactLog">
+        SELECT id, lover, contact_date, created_at, updated_at
+        FROM contact_log
+        WHERE contact_date = #{contactDate}
+    </select>
+
+    <insert id="insertContactLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO contact_log (lover,contact_date)
+        VALUES (#{lover},#{contactDate})
+    </insert>
+
+    <update id="updateContactLog">
+        UPDATE contact_log
+        SET lover = #{lover} , contact_date = #{contactDate}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteContactLog">
+        DELETE FROM contact_log
+        WHERE id = #{id}
+    </delete>
+
 
 </mapper>
