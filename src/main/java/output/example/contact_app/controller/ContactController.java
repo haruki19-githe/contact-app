@@ -1,5 +1,6 @@
 package output.example.contact_app.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,16 @@ import java.util.List;
 @RestController
 public class ContactController {
 
-    private final ContactService contactService;
+    private  ContactService contactService;
 
+    @Autowired
     public ContactController(ContactService contactService) {
         this.contactService = contactService;
     }
 
-    // 連続連絡日数を取得
 
-    /**現在の連絡継続日数を取得し、それに応じたメッセージを返します。
+    /**
+     * 現在の連絡継続日数を取得し、それに応じたメッセージを返します。
      *
      * @return 連絡継続日数と励ましメッセージを含むレスポンス
      */
@@ -42,6 +44,7 @@ public class ContactController {
 
     /**
      * 全ての連絡記録を取得します
+     *
      * @return 連絡記録のリスト
      */
     @GetMapping("/ContactLogList")
@@ -51,6 +54,7 @@ public class ContactController {
 
     /**
      * 指定されたIDの連絡記録を取得します
+     *
      * @param id 連絡記録のID
      * @return 対応する連絡記録
      */
@@ -61,6 +65,7 @@ public class ContactController {
 
     /**
      * 指定された名前（恋人）の連絡記録を取得します
+     *
      * @param lover 恋人の名前
      * @return 対応する連絡記録
      */
@@ -71,6 +76,7 @@ public class ContactController {
 
     /**
      * 新しい連絡記録を追加します
+     *
      * @param contactLog 追加する連絡記録の内容
      * @return 成功メッセージ
      */
@@ -85,12 +91,13 @@ public class ContactController {
     }
 
     /**
-     *指定されたIDの連絡記録を更新します
-     * @param id 更新対象の連絡記録ID
+     * 指定されたIDの連絡記録を更新します
+     *
+     * @param id         更新対象の連絡記録ID
      * @param contactLog 更新後の連絡記録データ
      * @return 成功メッセージ
      */
-    @PutMapping("/updateContactLog/id/{id}") // PUTリクエストで更新
+    @PutMapping("/updateContactLog/id/{id}")
     public ResponseEntity<String> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) {
         try {
             contactService.updateContactLog(id, contactLog.getLover(), contactLog.getContactDate());
@@ -106,7 +113,7 @@ public class ContactController {
      * @param id 削除する連絡記録のID
      * @return 成功メッセージ
      */
-    @DeleteMapping("/deleteContactLog/id/{id}") // DELETEリクエストで削除
+    @DeleteMapping("/deleteContactLog/id/{id}")
     public ResponseEntity<String> deleteContactLog(@PathVariable("id") int id) {
         try {
             contactService.deleteContactLog(id);

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class ContactService {
-    private final ContactRepository contactRepository;
+    private  ContactRepository contactRepository;
 
     @Autowired
     public ContactService(ContactRepository contactRepository) {
