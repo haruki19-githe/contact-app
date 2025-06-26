@@ -63,11 +63,11 @@ public class ContactServiceTest {
     @Test
     void 恋人の名前で記録を取得＿該当がある場合に正しく返ること() {
         ContactLog expected = createContactLog(1, "田中", LocalDate.of(2024, 6, 1));
-        when(repository.searchContactLogByLover("田中")).thenReturn(expected);
+        when(repository.searchContactLogByLover("田中")).thenReturn(List.of(expected));
 
-        ContactLog actual = sut.searchContactLogByLover("田中");
+        List<ContactLog> actual = sut.searchContactLogByLover("田中");
 
-        assertEquals(expected, actual);
+        assertEquals(List.of(expected), actual);
     }
 
     @Test
