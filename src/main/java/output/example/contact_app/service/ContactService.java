@@ -83,8 +83,8 @@ public class ContactService {
      * @return 対応する連絡記録
      * @throws ResponseStatusException 該当する記録が存在しない場合
      */
-    public ContactLog searchContactLogByLover(String lover) {
-        ContactLog log = contactRepository.searchContactLogByLover(lover);
+    public List<ContactLog> searchContactLogByLover(String lover) {
+        List<ContactLog> log = contactRepository.searchContactLogByLover(lover);
         if (log == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact record not found with lover: " + lover);
         }

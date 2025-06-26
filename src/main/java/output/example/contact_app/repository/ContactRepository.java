@@ -38,7 +38,7 @@ public interface ContactRepository {
      * @param lover 恋人の名前
      * @return 対応する連絡記録、存在しない場合は null
      */
-    ContactLog searchContactLogByLover(String lover);
+    List<ContactLog> searchContactLogByLover(String lover);
 
     /**
      * 指定された日付の連絡記録を取得します

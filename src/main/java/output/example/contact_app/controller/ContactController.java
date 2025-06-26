@@ -70,7 +70,7 @@ public class ContactController {
      * @return 対応する連絡記録
      */
     @GetMapping("/ContactLog/lover/{lover}")
-    public ContactLog getContactLogByLover(@PathVariable("lover") String lover) {
+    public List<ContactLog> getContactLogByLover(@PathVariable("lover") String lover) {
         return contactService.searchContactLogByLover(lover);
     }
 
