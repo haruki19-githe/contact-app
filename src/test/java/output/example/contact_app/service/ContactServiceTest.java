@@ -36,6 +36,7 @@ public class ContactServiceTest {
 
         int result = sut.calculateConsecutiveDays();
 
+        verify(repository, times(1)).searchConsecutiveLog(today);
         assertEquals(3, result);
     }
 
@@ -46,6 +47,7 @@ public class ContactServiceTest {
 
         ContactLog actual = sut.searchContactLogById(1);
 
+        verify(repository, times(1)).searchContactLogById(1);
         assertEquals(expected, actual);
     }
 
