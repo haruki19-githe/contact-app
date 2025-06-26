@@ -20,7 +20,11 @@ public class ContactService {
         this.contactRepository = contactRepository;
     }
 
-    //連絡日数を計算
+    /**
+     * 連絡が何日間連続しているかを計算します
+     *
+     * @return 連絡の継続日数（0以上）
+     */
     public int calculateConsecutiveDays() {
         List<ContactLog> logs = contactRepository.searchConsecutiveLog(LocalDate.now());
         if (logs.isEmpty()) {
@@ -48,12 +52,22 @@ public class ContactService {
         return consecutiveDays;
     }
 
-    //連絡記録の全件検索
+    /**
+     * すべての連絡記録を日付順で取得します
+     *
+     * @return 連絡記録のリスト
+     */
     public List<ContactLog> searchContactLogList() {
         return contactRepository.searchAllOrderByContactDateAsc(); // 変更
     }
 
-    //ID検索
+    /**
+     * 指定されたIDの連絡記録を取得します
+     *
+     * @param id 連絡記録のID
+     * @return 対応する連絡記録
+     * @throws ResponseStatusException 該当する記録が存在しない場合
+     */
     public ContactLog searchContactLogById(int id) {
         ContactLog log = contactRepository.searchContactLogById(id);
         if (log == null) {
@@ -62,7 +76,13 @@ public class ContactService {
         return log;
     }
 
-    //名前検索
+    /**
+     * 指定された恋人の名前で連絡記録を取得します
+     *
+     * @param lover 恋人の名前
+     * @return 対応する連絡記録
+     * @throws ResponseStatusException 該当する記録が存在しない場合
+     */
     public ContactLog searchContactLogByLover(String lover) {
         ContactLog log = contactRepository.searchContactLogByLover(lover);
         if (log == null) {
@@ -71,7 +91,13 @@ public class ContactService {
         return log;
     }
 
-    //連絡記録の追加
+    /**
+     * 新しい連絡記録を追加します
+     *
+     * @param lover 恋人の名前
+     * @param contactDate 連絡した日付
+     * @throws IllegalArgumentException 同じ日付の記録がすでに存在する場合
+     */
     @Transactional
     public void InsertContactLog(String lover, LocalDate contactDate) {
         if (contactRepository.searchByContactDate(contactDate) == null) {
@@ -84,7 +110,14 @@ public class ContactService {
         }
     }
 
-    //連絡記録の更新
+    /**
+     * 指定されたIDの連絡記録を更新します
+     *
+     * @param id 更新対象の記録ID
+     * @param lover 更新後の恋人の名前
+     * @param newContactDate 更新後の連絡日
+     * @throws IllegalArgumentException 対象が存在しない、または日付が重複している場合
+     */
     @Transactional
     public void updateContactLog(int id, String lover, LocalDate newContactDate) {
         ContactLog existingLog = contactRepository.searchContactLogById(id);
@@ -100,7 +133,11 @@ public class ContactService {
         contactRepository.updateContactLog(existingLog); // 変更
     }
 
-    //削除処理
+    /**
+     * 指定されたIDの連絡記録を削除します
+     *
+     * @param id 削除対象の記録ID
+     */
     @Transactional
     public void deleteContactLog(int id) {
         contactRepository.deleteContactLog(id);
