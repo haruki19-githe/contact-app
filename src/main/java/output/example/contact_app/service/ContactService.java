@@ -45,7 +45,6 @@ public class ContactService {
                 break;
             }
         }
-
         return consecutiveDays;
     }
 

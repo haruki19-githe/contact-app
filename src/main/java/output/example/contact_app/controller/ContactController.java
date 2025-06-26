@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import output.example.contact_app.data.ConsecutiveDaysResponse;
 import output.example.contact_app.data.ContactLog;
 import output.example.contact_app.service.ContactService;
 
@@ -20,8 +21,18 @@ public class ContactController {
 
     // 連続連絡日数を取得
     @GetMapping("/consecutive-days")
-    public int getConsecutiveDays() {
-        return contactService.calculateConsecutiveDays();
+    public ResponseEntity<ConsecutiveDaysResponse> getConsecutiveDays() {
+        int consecutiveDays = contactService.calculateConsecutiveDays();
+        String message;
+
+        if (consecutiveDays == 0) {
+            message = "今すぐ連絡を取りなさい、相手の心が離れてきますよ";
+        } else {
+            message = "その調子です！";
+        }
+
+        ConsecutiveDaysResponse response = new ConsecutiveDaysResponse(consecutiveDays, message);
+        return ResponseEntity.ok(response);
     }
 
     // 全ての連絡記録を取得
@@ -57,7 +68,7 @@ public class ContactController {
     @PutMapping("/updateContactLog/id/{id}") // PUTリクエストで更新
     public ResponseEntity<String> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) {
         try {
-            contactService.updateContactLog(id,contactLog.getLover(), contactLog.getContactDate());
+            contactService.updateContactLog(id, contactLog.getLover(), contactLog.getContactDate());
             return ResponseEntity.ok("更新処理が成功しました");
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
