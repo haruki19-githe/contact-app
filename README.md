@@ -19,17 +19,14 @@
 
 
 ## 環境
-| Category       | Technology Stack            |
-|----------------|-----------------------------|
-| language       | Java Oracle OpenJDK 21.0.4  |
-| framework      | springBoot 3.5.3            |
-| Infrastructure | Amazon Web Services, Vercel |
-| Database       | MySQL                       |
-| buildTool      | Gradle                      |
-| APITestTool    | postman                     |
-| CI/CD          | GitHub Actions              |
-| Design         | Figma, Lucid                |
-| etc.           | Git, GitHub                 |
+| Category    | Technology Stack                   |
+|-------------|------------------------------------|
+| language    | Java Oracle OpenJDK 21.0.4         |
+| framework   | springBoot 3.5.3                   |
+| Database    | MySQL                              |
+| buildTool   | Gradle                             |
+| APITestTool | postman                            |  
+| etc.        | Git, GitHub                        |
 
 ## 機能一覧
 | 機能                 | HTTPメソッド | エンドポイント (/api/contact-logs を基点) | 説明                                                                                                                                                                          | 
