@@ -141,6 +141,17 @@ public class ContactService {
     public void deleteContactLog(int id) {
         contactRepository.deleteContactLog(id);
     }
-
+    /**
+     *
+     * @param consecutiveDays 計算された連続日数
+     * @return 連続日数に応じたメッセージ文字列
+     */
+    public static String generateConsecutiveDaysMessage(int consecutiveDays) {
+        if (consecutiveDays == 0) {
+            return "今すぐ連絡を取りなさい、相手の心が離れてきますよ";
+        } else {
+            return "その調子です！";
+        }
+    }
 
 }
