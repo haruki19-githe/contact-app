@@ -123,13 +123,13 @@ public class ContactService {
         if (existingLog == null) {
             throw new IllegalArgumentException("ID: " + id + " の連絡記録が見つかりません。");
         }
-        ContactLog logAtNewDate = contactRepository.searchByContactDate(newContactDate); // 変更
+        ContactLog logAtNewDate = contactRepository.searchByContactDate(newContactDate);
         if (logAtNewDate != null && logAtNewDate.getId() != id) {
             throw new IllegalArgumentException("指定された日付 (" + newContactDate + ") には既に別の連絡記録が存在します。");
         }
         existingLog.setContactDate(newContactDate);
         existingLog.setLover(lover);
-        contactRepository.updateContactLog(existingLog); // 変更
+        contactRepository.updateContactLog(existingLog);
     }
 
     /**
