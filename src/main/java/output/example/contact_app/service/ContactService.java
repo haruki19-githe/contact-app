@@ -99,15 +99,14 @@ public class ContactService {
      * @throws IllegalArgumentException 同じ日付の記録がすでに存在する場合
      */
     @Transactional
-    public void InsertContactLog(String lover, LocalDate contactDate) {
-        if (contactRepository.searchByContactDate(contactDate) == null) {
-            ContactLog newLog = new ContactLog();
-            newLog.setLover(lover);
-            newLog.setContactDate(contactDate);
-            contactRepository.insertContactLog(newLog);
-        } else {
+    public void insertContactLog(String lover, LocalDate contactDate) {
+        if (contactRepository.searchByContactDate(contactDate) != null) {
             throw new IllegalArgumentException("指定された日付 (" + contactDate + ") の連絡記録は既に存在します。");
         }
+        ContactLog newLog = new ContactLog();
+        newLog.setLover(lover);
+        newLog.setContactDate(contactDate);
+        contactRepository.insertContactLog(newLog);
     }
 
     /**

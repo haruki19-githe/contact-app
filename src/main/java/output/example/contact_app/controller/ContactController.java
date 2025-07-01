@@ -83,7 +83,7 @@ public class ContactController {
     @PostMapping("/insertContactLog")
     public ResponseEntity<String> addContactLog(@RequestBody ContactLog contactLog) {
         try {
-            contactService.InsertContactLog(contactLog.getLover(), contactLog.getContactDate());
+            contactService.insertContactLog(contactLog.getLover(), contactLog.getContactDate());
             return ResponseEntity.ok("登録処理が成功しました。");
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
