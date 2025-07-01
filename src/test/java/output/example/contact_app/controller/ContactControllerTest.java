@@ -1,6 +1,5 @@
 package output.example.contact_app.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -30,7 +29,6 @@ class ContactControllerTest {
     @MockitoBean
     private ContactService service;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     @Test

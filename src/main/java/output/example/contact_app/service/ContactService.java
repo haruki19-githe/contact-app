@@ -31,20 +31,20 @@ public class ContactService {
             return 0;
         }
         LocalDate today = LocalDate.now();
-        LocalDate firstDate = logs.get(0).getContactDate();
-        if (!firstDate.equals(today) && !firstDate.equals(today.minusDays(1))) {
+        LocalDate latestDate = logs.get(0).getContactDate();
+        if (!latestDate.equals(today) && !latestDate.equals(today.minusDays(1))) {
             return 0;
         }
 
         int consecutiveDays = 1;
-        LocalDate expectedDate = firstDate.minusDays(1);
+        LocalDate expectedPreviousDate = latestDate.minusDays(1);//6月３０日
 
-        for (int dayindex = 1; dayindex < logs.size(); dayindex++) {
-            LocalDate logDate = logs.get(dayindex).getContactDate();
+        for (int i = 1; i < logs.size(); i++) {
+            LocalDate currentLogDate = logs.get(i).getContactDate();
 
-            if (logDate.equals(expectedDate)) {
+            if (currentLogDate.equals(expectedPreviousDate)) {
                 consecutiveDays++;
-                expectedDate = expectedDate.minusDays(1);
+                expectedPreviousDate = expectedPreviousDate.minusDays(1);
             } else {
                 break;
             }
