@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 public class ContactController {
 
-    private  ContactService contactService;
+    private ContactService contactService;
 
     @Autowired
     public ContactController(ContactService contactService) {
@@ -30,13 +30,7 @@ public class ContactController {
     @GetMapping("/consecutive-days")
     public ResponseEntity<ConsecutiveDaysResponse> getConsecutiveDays() {
         int consecutiveDays = contactService.calculateConsecutiveDays();
-        String message;
-
-        if (consecutiveDays == 0) {
-            message = "今すぐ連絡を取りなさい、相手の心が離れてきますよ";
-        } else {
-            message = "その調子です！";
-        }
+        String message = ContactService.generateConsecutiveDaysMessage(consecutiveDays);
 
         ConsecutiveDaysResponse response = new ConsecutiveDaysResponse(consecutiveDays, message);
         return ResponseEntity.ok(response);
@@ -83,7 +77,7 @@ public class ContactController {
     @PostMapping("/insertContactLog")
     public ResponseEntity<String> addContactLog(@RequestBody ContactLog contactLog) {
         try {
-            contactService.InsertContactLog(contactLog.getLover(), contactLog.getContactDate());
+            contactService.insertContactLog(contactLog.getLover(), contactLog.getContactDate());
             return ResponseEntity.ok("登録処理が成功しました。");
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

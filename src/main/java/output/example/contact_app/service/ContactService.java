@@ -31,25 +31,25 @@ public class ContactService {
             return 0;
         }
         LocalDate today = LocalDate.now();
-        LocalDate firstDate = logs.get(0).getContactDate();
-        if (!firstDate.equals(today) && !firstDate.equals(today.minusDays(1))) {
+        LocalDate latestLogDate = logs.get(0).getContactDate();
+        if (!latestLogDate.equals(today) && !latestLogDate.equals(today.minusDays(1))) {
             return 0;
         }
 
-        int consecutiveDays = 1;
-        LocalDate expectedDate = firstDate.minusDays(1);
+        int consecutiveDaysCount = 1;
+        LocalDate expectedPreviousDate = latestLogDate.minusDays(1);
 
-        for (int dayindex = 1; dayindex < logs.size(); dayindex++) {
-            LocalDate logDate = logs.get(dayindex).getContactDate();
+        for (int i = 1; i < logs.size(); i++) {
+            LocalDate currentLogDate = logs.get(i).getContactDate();
 
-            if (logDate.equals(expectedDate)) {
-                consecutiveDays++;
-                expectedDate = expectedDate.minusDays(1);
+            if (currentLogDate.equals(expectedPreviousDate)) {
+                consecutiveDaysCount++;
+                expectedPreviousDate = expectedPreviousDate.minusDays(1);
             } else {
                 break;
             }
         }
-        return consecutiveDays;
+        return consecutiveDaysCount;
     }
 
     /**
@@ -99,15 +99,14 @@ public class ContactService {
      * @throws IllegalArgumentException 同じ日付の記録がすでに存在する場合
      */
     @Transactional
-    public void InsertContactLog(String lover, LocalDate contactDate) {
-        if (contactRepository.searchByContactDate(contactDate) == null) {
-            ContactLog newLog = new ContactLog();
-            newLog.setLover(lover);
-            newLog.setContactDate(contactDate);
-            contactRepository.insertContactLog(newLog);
-        } else {
+    public void insertContactLog(String lover, LocalDate contactDate) {
+        if (contactRepository.searchByContactDate(contactDate) != null) {
             throw new IllegalArgumentException("指定された日付 (" + contactDate + ") の連絡記録は既に存在します。");
         }
+        ContactLog newLog = new ContactLog();
+        newLog.setLover(lover);
+        newLog.setContactDate(contactDate);
+        contactRepository.insertContactLog(newLog);
     }
 
     /**
@@ -124,13 +123,13 @@ public class ContactService {
         if (existingLog == null) {
             throw new IllegalArgumentException("ID: " + id + " の連絡記録が見つかりません。");
         }
-        ContactLog logAtNewDate = contactRepository.searchByContactDate(newContactDate); // 変更
+        ContactLog logAtNewDate = contactRepository.searchByContactDate(newContactDate);
         if (logAtNewDate != null && logAtNewDate.getId() != id) {
             throw new IllegalArgumentException("指定された日付 (" + newContactDate + ") には既に別の連絡記録が存在します。");
         }
         existingLog.setContactDate(newContactDate);
         existingLog.setLover(lover);
-        contactRepository.updateContactLog(existingLog); // 変更
+        contactRepository.updateContactLog(existingLog);
     }
 
     /**
@@ -142,6 +141,17 @@ public class ContactService {
     public void deleteContactLog(int id) {
         contactRepository.deleteContactLog(id);
     }
-
+    /**
+     *
+     * @param consecutiveDays 計算された連続日数
+     * @return 連続日数に応じたメッセージ文字列
+     */
+    public static String generateConsecutiveDaysMessage(int consecutiveDays) {
+        if (consecutiveDays == 0) {
+            return "今すぐ連絡を取りなさい、相手の心が離れてきますよ";
+        } else {
+            return "その調子です！";
+        }
+    }
 
 }
