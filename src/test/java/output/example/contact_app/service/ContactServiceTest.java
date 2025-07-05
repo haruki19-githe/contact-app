@@ -77,7 +77,7 @@ public class ContactServiceTest {
         LocalDate date = LocalDate.of(2024, 6, 2);
         when(repository.searchByContactDate(date)).thenReturn(null);
 
-        sut.InsertContactLog("田中", date);
+        sut.insertContactLog("田中", date);
 
         verify(repository, times(1)).insertContactLog(any(ContactLog.class));
     }
@@ -88,7 +88,7 @@ public class ContactServiceTest {
         when(repository.searchByContactDate(date)).thenReturn(createContactLog(1, "田中", date));
 
         assertThrows(IllegalArgumentException.class, () ->
-                sut.InsertContactLog("田中", date)
+                sut.insertContactLog("田中", date)
         );
     }
 
