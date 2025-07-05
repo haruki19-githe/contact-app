@@ -93,7 +93,7 @@ class ContactControllerTest {
                            }
                         """)).andExpect(status().isOk());
 
-        verify(service, times(1)).InsertContactLog("山田", LocalDate.of(2025, 6, 25));
+        verify(service, times(1)).insertContactLog("山田", LocalDate.of(2025, 6, 25));
     }
 
     @Test
