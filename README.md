@@ -15,18 +15,36 @@
 連絡は相手に安心と誠実さを与える大切なツールと私は考えています。特に遠距離カップルは連絡していないと自然消滅してしまいます。
 そのため、毎日連絡できているか管理できるアプリが欲しいと考えつくらせて頂きました。
 ## デモ動画
+### postman
 https://github.com/user-attachments/assets/c09d98f7-01aa-4ced-836e-2c96c4cc9a23
+### 画面
+https://github.com/user-attachments/assets/76651cb7-d5b9-4bab-aa51-04be7b7d46a5
 
 
 ## 環境
-| Category    | Technology Stack                   |
-|-------------|------------------------------------|
-| language    | Java Oracle OpenJDK 21.0.4         |
-| framework   | springBoot 3.5.3                   |
-| Database    | MySQL                              |
-| buildTool   | Gradle                             |
-| APITestTool | postman                            |  
-| etc.        | Git, GitHub                        |
+### バックエンド
+
+| カテゴリ | 使用技術 |
+| ---- | ---- |
+| 言語 | Java 21.0.4 |
+| フレームワーク | SpringBoot 3.5.3 |
+| ORM | MyBatis 3.0.4 |
+| テスト | Junit 5 |
+
+### フロントエンド
+
+| カテゴリ | 使用技術 |
+| ---- | ---- |
+| 言語 | JavaScript |
+| フレームワーク | React 19.1.0 |
+
+### その他
+
+| カテゴリ | 使用技術 |
+| ---- | ---- |
+| ApiTestTool | postman |
+| バージョン管理 | Git・Github |
+| データベース | MySQL |
 
 ## 機能一覧
 | 機能                 | HTTPメソッド | エンドポイント (/api/contact-logs を基点) | 説明                                                                                                                                                                          | 
@@ -53,4 +71,5 @@ https://github.com/user-attachments/assets/c09d98f7-01aa-4ced-836e-2c96c4cc9a23
 * ゆくゆく完成させて悩みを持った人を解決させていきたいと考えています。
 * 感想・コメント等あればXアカウントまでご連絡くださると幸いです。
 
-
+##更新
+* 7/7 （フロントエンドの実装）
