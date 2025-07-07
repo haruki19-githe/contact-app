@@ -76,12 +76,8 @@ public class ContactController {
      */
     @PostMapping("/insertContactLog")
     public ResponseEntity<String> addContactLog(@RequestBody ContactLog contactLog) {
-        try {
-            contactService.insertContactLog(contactLog.getLover(), contactLog.getContactDate());
-            return ResponseEntity.ok("登録処理が成功しました。");
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+        contactService.insertContactLog(contactLog.getLover(), contactLog.getContactDate());
+        return ResponseEntity.ok("登録処理が成功しました。");
     }
 
     /**
@@ -93,12 +89,8 @@ public class ContactController {
      */
     @PutMapping("/updateContactLog/id/{id}")
     public ResponseEntity<String> updateContactLog(@PathVariable("id") int id, @RequestBody ContactLog contactLog) {
-        try {
-            contactService.updateContactLog(id, contactLog.getLover(), contactLog.getContactDate());
-            return ResponseEntity.ok("更新処理が成功しました");
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+        contactService.updateContactLog(id, contactLog.getLover(), contactLog.getContactDate());
+        return ResponseEntity.ok("更新処理が成功しました");
     }
 
     /**
@@ -109,12 +101,8 @@ public class ContactController {
      */
     @DeleteMapping("/deleteContactLog/id/{id}")
     public ResponseEntity<String> deleteContactLog(@PathVariable("id") int id) {
-        try {
-            contactService.deleteContactLog(id);
-            return ResponseEntity.ok("削除処理が成功しました。");
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting contact record: " + e.getMessage());
-        }
+        contactService.deleteContactLog(id);
+        return ResponseEntity.ok("削除処理が成功しました。");
     }
 
 

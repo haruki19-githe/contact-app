@@ -139,6 +139,10 @@ public class ContactService {
      */
     @Transactional
     public void deleteContactLog(int id) {
+        ContactLog existingLog = contactRepository.searchContactLogById(id);
+        if (existingLog == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID: " + id + " の連絡記録が見つかりません。削除できませんでした。");
+        }
         contactRepository.deleteContactLog(id);
     }
     /**
