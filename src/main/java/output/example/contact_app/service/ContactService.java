@@ -26,12 +26,12 @@ public class ContactService {
      * @return 連絡の継続日数（0以上）
      */
     public int calculateConsecutiveDays() {
-        List<ContactLog> logs = contactRepository.searchConsecutiveLog(LocalDate.now());
-        if (logs.isEmpty()) {
+        List<ContactLog> logList = contactRepository.searchConsecutiveLog(LocalDate.now());
+        if (logList.isEmpty()) {
             return 0;
         }
         LocalDate today = LocalDate.now();
-        LocalDate latestLogDate = logs.get(0).getContactDate();
+        LocalDate latestLogDate = logList.get(0).getContactDate();
         if (!latestLogDate.equals(today) && !latestLogDate.equals(today.minusDays(1))) {
             return 0;
         }
@@ -39,8 +39,8 @@ public class ContactService {
         int consecutiveDaysCount = 1;
         LocalDate expectedPreviousDate = latestLogDate.minusDays(1);
 
-        for (int i = 1; i < logs.size(); i++) {
-            LocalDate currentLogDate = logs.get(i).getContactDate();
+        for (int i = 1; i < logList.size(); i++) {
+            LocalDate currentLogDate = logList.get(i).getContactDate();
 
             if (currentLogDate.equals(expectedPreviousDate)) {
                 consecutiveDaysCount++;
@@ -84,11 +84,11 @@ public class ContactService {
      * @throws ResponseStatusException 該当する記録が存在しない場合
      */
     public List<ContactLog> searchContactLogByLover(String lover) {
-        List<ContactLog> log = contactRepository.searchContactLogByLover(lover);
-        if (log.isEmpty()) {
+        List<ContactLog> logList = contactRepository.searchContactLogByLover(lover);
+        if (logList.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "お探しの名前は見つかりませんでした: " + lover);
         }
-        return log;
+        return logList;
     }
 
     /**
