@@ -71,7 +71,7 @@ public class ContactService {
     public ContactLog searchContactLogById(int id) {
         ContactLog log = contactRepository.searchContactLogById(id);
         if (log == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact record not found with ID: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "お探しのIDは見つかりませんでした: " + id);
         }
         return log;
     }
@@ -85,8 +85,8 @@ public class ContactService {
      */
     public List<ContactLog> searchContactLogByLover(String lover) {
         List<ContactLog> log = contactRepository.searchContactLogByLover(lover);
-        if (log == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact record not found with lover: " + lover);
+        if (log.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "お探しの名前は見つかりませんでした: " + lover);
         }
         return log;
     }
