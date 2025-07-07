@@ -1,10 +1,8 @@
 package output.example.contact_app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import output.example.contact_app.data.ConsecutiveDaysResponse;
 import output.example.contact_app.data.ContactLog;
 import output.example.contact_app.service.ContactService;
