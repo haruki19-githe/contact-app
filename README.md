@@ -64,6 +64,8 @@ https://github.com/user-attachments/assets/76651cb7-d5b9-4bab-aa51-04be7b7d46a5
 * ログイン機能
 * 話題リストの追加
 * モチベーションアップ機能
+* GoogleMapAPIを搭載し、デートスポットを共有し、評価する機能追加
+* 会った回数を計算する機能
 
 
 ## おわりに
