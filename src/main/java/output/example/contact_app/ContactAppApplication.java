@@ -20,9 +20,8 @@ public class ContactAppApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedOrigins(
-								"http://localhost:3000",
-								"https://contact-app-frontend-theta.vercel.app/",
-								"https://ContactAppBackend-env.eba-my6jb9hb.ap-northeast-1.elasticbeanstalk.com " // ここを追加
+								"http://localhost:3000", // ローカル開発用
+								"https://contact-app-frontend-dlp58j9qw-fukutaharukis-projects.vercel.app/" // 新しいフロントエンドサイトのURL
 						)
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
