@@ -22,7 +22,7 @@ public class ContactAppApplication {
 						.allowedOrigins(
 								"http://localhost:3000",
 								"https://contact-app-frontend-theta.vercel.app/",
-								"https://yContactAppBackend-env.eba-my6jb9hb.ap-northeast-1.elasticbeanstalk.com " // ここを追加
+								"https://ContactAppBackend-env.eba-my6jb9hb.ap-northeast-1.elasticbeanstalk.com " // ここを追加
 						)
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
