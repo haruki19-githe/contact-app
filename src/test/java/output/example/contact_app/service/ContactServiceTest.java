@@ -59,7 +59,7 @@ public class ContactServiceTest {
                 sut.searchContactLogById(999)
         );
 
-        assertTrue(exception.getMessage().contains("IDが見つかりません"));
+        assertTrue(exception.getMessage().contains("Contact record not found"));
     }
 
     @Test
