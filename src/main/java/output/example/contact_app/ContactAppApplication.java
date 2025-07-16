@@ -19,10 +19,7 @@ public class ContactAppApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins(
-								"http://localhost:3000", // ローカル開発用
-								"https://contact-app-frontend-dlp58j9qw-fukutaharukis-projects.vercel.app/" // 新しいフロントエンドサイトのURL
-						)
+						.allowedOrigins("http://localhost:3000") // Reactアプリが実行されるポートに合わせてください
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
 						.allowCredentials(true);
